@@ -268,3 +268,210 @@ h1 {
     transform: translate(var(--shadow-offset), var(--shadow-offset));
     box-shadow: 0 0 0 var(--shadow-color);
 }
+
+#pokemon-contendor {
+    width: 100%;
+    max-width: 500px;
+    min-height: 200px;
+    display: flex;
+    justify-content: center;
+}
+
+/* estilos de la tarjeta de pokemon*/
+.tarjeta-pokemon {
+    width: 100%;
+    background-color: var(--card-bg);
+    border: var(--border-width) solid var(--border-color);
+    box-shadow: var(--shadow-offset) var(--shadow-offset) 0 var(--shadow-color);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
+.tarjeta-pokemon::before {
+    content: "POKEMON_DATA";
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: var(--border-color);
+    color: white;
+    padding: 0.2rem 0.5rem;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+.tarjeta-pokemon.cache::after {
+    content: "📦 DESDE CÁCHE";
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: var(--color-cache);
+    color: var(--shadow-color);
+    font-size: 12px;
+    padding: 4px 8px;
+    font-weight: bold;
+    font-family: 'Courier New', monospace;
+}
+.tarjeta-pokemon.api::after {
+    content: "🌐 DESDE API";
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: var(--color-api);
+    color: var(--shadow-color);
+    font-size: 12px;
+    padding: 4px 8px;
+    font-weight: bold;
+    font-family: 'Courier New', monospace;
+}
+
+.contenedor-imagen-pokemon {
+    width: 200px;
+    height: 200px;
+    border: var(--border-width) solid var(--border-color);
+    margin-bottom: 1.5rem;
+    background-color: #f8f8f8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.contenedor-imagen-pokemon::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: repeating-linear-gradient(
+            45deg,
+            transparent,
+            transparent 10px,
+            rgba(0,0,0,0.05) 10px,
+            rgba(0,0,0,0.05) 20px
+    );
+    z-index: 0;
+}
+
+.imagen-pokemon {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    z-index: 1;
+    image-rendering: pixelated;
+}
+
+.informacion-pokemon {
+    width: 100%;
+    text-align: left;
+}
+
+.nombre-pokemon {
+    font-size: 2rem;
+    text-transform: uppercase;
+    border-bottom: var(--border-width) solid var(--border-color);
+    margin: 0 0 1rem 0;
+    padding-bottom: 0.5rem;
+}
+
+.tipos-pokemon {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.tipo-insignia {
+    background-color: var(--border-color);
+    color: white;
+    padding: 0.5rem 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+}
+
+.habilidad-pokemon {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+.habilidades-pokemon {
+    font-size: 17px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+/* Habilidades normales (verde) */
+.habilidad-normal {
+    background-color: #4cff4c;
+    color: black;
+    padding: 0.5rem 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    border: var(--border-width) solid var(--border-color);
+    box-shadow: var(--shadow-offset) var(--shadow-offset) 0 var(--shadow-color);
+}
+
+
+/* Habilidades ocultas (amarillo) */
+.habilidad-oculta {
+    background-color: #ffe44d;
+    color: black;
+    padding: 0.5rem 1rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    border: var(--border-width) solid var(--border-color);
+    box-shadow: var(--shadow-offset) var(--shadow-offset) 0 var(--shadow-color);
+}
+
+.estadisticas-pokemon{
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.5rem 1rem;
+    width: 100%;
+    font-size: 0.9rem;
+}
+
+.etiqueta-estadisticas {
+    font-weight: bold;
+}
+
+.contenedor-barra-estadisticas {
+    width: 100%;
+    height: 1.2rem;
+    border: 2px solid var(--border-color);
+    position: relative;
+}
+
+.barra-estadisticas {
+    height: 100%;
+    background-color: var(--secondary-accent);
+}
+
+.mensaje-error {
+    background-color: var(--accent-color);
+    color: white;
+    padding: 2rem;
+    border: var(--border-width) solid var(--border-color);
+    box-shadow: var(--shadow-offset) var(--shadow-offset) 0 var(--shadow-color);
+    font-weight: bold;
+    font-size: 1.5rem;
+    text-align: center;
+    transform: rotate(1deg);
+}
+
+.cargando {
+    font-size: 2rem;
+    font-weight: 900;
+    animation: blink 0.5s infinite;
+}
+
+@keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+}
