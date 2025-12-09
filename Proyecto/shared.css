@@ -301,6 +301,8 @@ h1 {
     font-size: 0.8rem;
     font-weight: bold;
 }
+
+/*hago un selector de clases multiples*/
 .tarjeta-pokemon.cache::after {
     content: "📦 DESDE CÁCHE";
     position: absolute;
