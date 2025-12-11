@@ -98,7 +98,7 @@ h1 {
     transform: scale(0.85); /* Usamos scale para para agrandar o achicar un elemento visualmente, sin cambiar su tamaño real en el layout. */
 }
 
-#buscar {
+.buscar-index {
     height: 70px;
     width: 154px;
     font-size: 19px;
@@ -123,7 +123,7 @@ h1 {
     box-shadow: 0 0 0 var(--shadow-color);
 }
 
-#historico, #favoritos {
+.historico-buscar, #favoritos {
     font-family: 'Courier New', monospace;
     padding: 15px;
     width: 179px;
@@ -140,11 +140,11 @@ h1 {
     transition: all 0.1s;
 }
 
-#historico:hover {
+.historico-buscar:hover {
     transform: translate(-2px, -2px);
     box-shadow: calc(var(--shadow-offset) + 2px) calc(var(--shadow-offset) + 2px) 0 var(--shadow-color);
 }
-#historico:Active {
+.historico-buscar:Active {
     transform: translate(var(--shadow-offset), var(--shadow-offset));
     box-shadow: 0 0 0 var(--shadow-color);
 }
@@ -476,4 +476,192 @@ h1 {
     0% { opacity: 1; }
     50% { opacity: 0; }
     100% { opacity: 1; }
+}
+
+/*CSS DE LA VISTA DE HISTORICOS*/
+.buscar-historico {
+    height: 70px;
+    width: 154px;
+    font-size: 19px;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: black;
+    padding: 15px;
+    font-family: 'Courier New', monospace;
+    background-color: var(--card-bg);
+    border: var(--border-width) solid var(--border-color);
+    box-shadow: var(--shadow-offset) var(--shadow-offset) 0 var(--shadow-color);
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.1s;
+}
+
+#buscar-historico:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: calc(var(--shadow-offset) + 2px) calc(var(--shadow-offset) + 2px) 0 var(--shadow-color);
+}
+#buscar-historico:Active {
+    transform: translate(var(--shadow-offset), var(--shadow-offset));
+    box-shadow: 0 0 0 var(--shadow-color);
+}
+
+.historico-index {
+    font-family: 'Courier New', monospace;
+    padding: 15px;
+    width: 179px;
+    height: 70px;
+    font-size: 19px;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: black;
+    background-color: var(--secondary-accent);
+    border: var(--border-width) solid var(--border-color);
+    box-shadow: var(--shadow-offset) var(--shadow-offset) 0 var(--shadow-color);
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.1s;
+}
+
+.historico-index:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: calc(var(--shadow-offset) + 2px) calc(var(--shadow-offset) + 2px) 0 var(--shadow-color);
+}
+.historico-index:Active {
+    transform: translate(var(--shadow-offset), var(--shadow-offset));
+    box-shadow: 0 0 0 var(--shadow-color);
+}
+
+#lista-pokemon {
+    display: flex;
+    flex-direction: column;
+}
+
+.tarjeta-pokemon-historico {
+    width: 550px;
+    background-color: var(--card-bg);
+    border: var(--border-width) solid var(--border-color);
+    box-shadow: var(--shadow-offset) var(--shadow-offset) 0 var(--shadow-color);
+    padding: 20px 20px 0;
+    display: flex;
+    align-items: center;
+    transform: scale(0.8);
+    cursor: pointer;
+}
+
+.tarjeta-pokemon-historico:hover {
+    transform: scale(0.8) translate(-2px, -2px);
+    box-shadow: calc(var(--shadow-offset) + 2px) calc(var(--shadow-offset) + 2px) 0 var(--shadow-color);
+}
+
+.contenedor-imagen-pokemon-historico {
+    width: 100px;
+    border: var(--border-width) solid var(--border-color);
+    margin-bottom: 24px;
+    margin-right: 10px;
+    background-color: #f8f8f8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.contenedor-imagen-pokemon-historico::after {
+    content: "";
+    position: absolute;
+    width: 80px;
+    height: 100%;
+    background: repeating-linear-gradient(
+            45deg,
+            transparent,
+            transparent 10px,
+            rgba(0,0,0,0.05) 10px,
+            rgba(0,0,0,0.05) 20px
+    );
+    z-index: 0;
+}
+
+.nombre-pokemon-historico {
+    text-transform: uppercase;
+    margin: 0;
+    font-size: 20px;
+}
+
+#tipos-pokemon-historico {
+    gap: 0;
+}
+
+#tipo-insignia-lista-pokemon {
+    transform: scale(0.8);
+}
+
+#vacio-historico {
+    width: 100%;
+    background-color: var(--card-bg);
+    border: var(--border-width) solid var(--border-color);
+    box-shadow: var(--shadow-offset) var(--shadow-offset) 0 var(--shadow-color);
+    padding: 20px 20px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    transform: scale(0.8);
+}
+
+#imagen-historico {
+    transform: scale(3);
+}
+
+#titulo {
+    text-transform: uppercase;
+    font-family: 'Courier New', monospace;
+    margin-bottom: 10px;
+}
+
+#informacion-vacio {
+    font-family: 'Courier New', monospace;
+}
+
+.contenedor-boton-eliminar {
+    display: flex;
+    justify-content: center;
+}
+
+.boton-eliminar {
+    font-size: 25px;
+    margin-bottom: 30px;
+    height: 60px;
+    background-color: var(--accent-color);
+    border: var(--border-width) solid var(--border-color);
+    box-shadow: var(--shadow-offset) var(--shadow-offset) 0 var(--shadow-color);
+    cursor: pointer;
+}
+
+.boton-eliminar:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: calc(var(--shadow-offset) + 2px) calc(var(--shadow-offset) + 2px) 0 var(--shadow-color);
+}
+
+.contendor-boton-limpiar-todo {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.boton-limpiar-todo {
+    transform: scale(0.8);
+    font-size: 1.5em;
+    font-weight: bold;
+    padding: 15px 25px;
+    background-color: var(--accent-color);
+    border: var(--border-width) solid var(--border-color);
+    box-shadow: var(--shadow-offset) var(--shadow-offset) 0 var(--shadow-color);
+    color: var(--card-bg);
+    text-transform: uppercase;
+    font-family: 'Courier New', monospace;
+    cursor: pointer;
+}
+
+.boton-limpiar-todo:hover {
+    transform: scale(0.8) translate(-2px, -2px);
+    box-shadow: calc(var(--shadow-offset) + 2px) calc(var(--shadow-offset) + 2px) 0 var(--shadow-color);
 }
