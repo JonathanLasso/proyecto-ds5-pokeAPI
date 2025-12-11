@@ -123,7 +123,7 @@ h1 {
     box-shadow: 0 0 0 var(--shadow-color);
 }
 
-.historico-buscar, #favoritos {
+.historico-buscar, .favoritos-buscar {
     font-family: 'Courier New', monospace;
     padding: 15px;
     width: 179px;
@@ -366,6 +366,7 @@ h1 {
 .informacion-pokemon {
     width: 100%;
     text-align: left;
+    margin-bottom: 30px;
 }
 
 .nombre-pokemon {
@@ -452,6 +453,22 @@ h1 {
 .barra-estadisticas {
     height: 100%;
     background-color: var(--secondary-accent);
+}
+
+.boton-favoritos-buscar {
+    width: 70px;
+    font-size: 25px;
+    margin-bottom: 30px;
+    height: 60px;
+    background-color: var(--color-secondary);
+    border: var(--border-width) solid var(--border-color);
+    box-shadow: var(--shadow-offset) var(--shadow-offset) 0 var(--shadow-color);
+    cursor: pointer;
+}
+
+.boton-favoritos-buscar:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: calc(var(--shadow-offset) + 2px) calc(var(--shadow-offset) + 2px) 0 var(--shadow-color);
 }
 
 .mensaje-error {
@@ -588,6 +605,7 @@ h1 {
 
 #tipos-pokemon-historico {
     gap: 0;
+    margin: 0;
 }
 
 #tipo-insignia-lista-pokemon {
@@ -619,6 +637,27 @@ h1 {
 
 #informacion-vacio {
     font-family: 'Courier New', monospace;
+}
+
+.contenedor-boton-favoritos {
+    display: flex;
+    justify-content: center;
+    margin-right: 10px;
+}
+
+.boton-favoritos {
+    font-size: 25px;
+    margin-bottom: 30px;
+    height: 60px;
+    background-color: var(--color-secondary);
+    border: var(--border-width) solid var(--border-color);
+    box-shadow: var(--shadow-offset) var(--shadow-offset) 0 var(--shadow-color);
+    cursor: pointer;
+}
+
+.boton-favoritos:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: calc(var(--shadow-offset) + 2px) calc(var(--shadow-offset) + 2px) 0 var(--shadow-color);
 }
 
 .contenedor-boton-eliminar {
@@ -664,4 +703,23 @@ h1 {
 .boton-limpiar-todo:hover {
     transform: scale(0.8) translate(-2px, -2px);
     box-shadow: calc(var(--shadow-offset) + 2px) calc(var(--shadow-offset) + 2px) 0 var(--shadow-color);
+}
+
+/*CSS DE LA VISTA DE FAVORITOS*/
+
+.favoritos-index {
+    font-family: 'Courier New', monospace;
+    padding: 15px;
+    width: 179px;
+    height: 70px;
+    font-size: 19px;
+    font-weight: 900;
+    text-transform: uppercase;
+    color: black;
+    background-color: var(--secondary-accent);
+    border: var(--border-width) solid var(--border-color);
+    box-shadow: var(--shadow-offset) var(--shadow-offset) 0 var(--shadow-color);
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.1s;
 }
