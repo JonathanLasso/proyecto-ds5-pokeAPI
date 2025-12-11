@@ -9,8 +9,10 @@
             inputBuscar: document.querySelector('#buscar-pokemon-nombre-id'),
             contenedorPokemon: document.querySelector('#pokemon-contendor'),
             listaPokemon: document.querySelector('#lista-pokemon'),
+            listaFavoritosPokemons: document.querySelector('#lista-favoritos-pokemons'),
             botonBuscar: document.querySelector('#buscar'),
             botonHistorico: document.querySelector('#historico'),
+            botonFavoritos: document.querySelector('#favoritos'),
         };
         //Plantillas HTML (vistas)
         const templates = {
@@ -42,6 +44,9 @@
                         <div class="habilidad-pokemon">${habilidadesHtml}</div>
                         <div class="estadisticas-pokemon">${estadisticasHtml}</div>
                     </div>
+                    <div class="contenedor-boton-favoritos">
+                        <button class="boton-favoritos-buscar">❤️</button>
+                    </div>
                 </div>`;
             },
             error: (mensaje) => `<div class="mensaje-error"> ERROR: ${mensaje.toUpperCase()}</div>`,
@@ -66,6 +71,9 @@
                         <h2 class="nombre-pokemon-historico">#${pokemon.id} ${pokemon.name}</h2>
                         <div id="tipos-pokemon-historico" class="tipos-pokemon">${tiposHtml}</div>
                      </div>
+                     <div class="contenedor-boton-favoritos">
+                        <button class="boton-favoritos">❤️</button>
+                     </div>
                      <div class="contenedor-boton-eliminar">
                         <button class="boton-eliminar" data-id-pokemon="${pokemon.id}">🗑️</button>
                      </div>
@@ -75,6 +83,23 @@
                 return`
                 <div class="contendor-boton-limpiar-todo">
                     <button class="boton-limpiar-todo" >🗑️ Limpiar todo</button>
+                </div>`
+            },
+            listaFavoritosPokemons: (pokemon) => {
+                //para el tipos de pokemon
+                const tiposHtml = pokemon.types.map(tipo => `<span id="tipo-insignia-lista-pokemon" class="tipo-insignia">${tipo.type.name}</span>`).join('')
+                return `
+                <div class="tarjeta-pokemon-historico" data-nombre-pokemon="${pokemon.name}">
+                    <div class="contenedor-imagen-pokemon-historico">
+                        <img class="imagen-pokemon" src="${pokemon.sprites.front_default || ''}" alt="${pokemon.name}">
+                    </div>
+                     <div class="informacion-pokemon">
+                        <h2 class="nombre-pokemon-historico">#${pokemon.id} ${pokemon.name}</h2>
+                        <div id="tipos-pokemon-historico" class="tipos-pokemon">${tiposHtml}</div>
+                     </div>
+                     <div class="contenedor-boton-eliminar">
+                        <button class="boton-eliminar" data-id-pokemon="${pokemon.id}">🗑️</button>
+                     </div>
                 </div>`
             }
         }
@@ -115,6 +140,7 @@
             guardarCachePokemones(cachePokemones){
                 const key = "historialPokemon";
                 localStorage.setItem(key, JSON.stringify(cachePokemones));
+
             },
             obtenerCachePokemones() {
                 let cachePokemones = JSON.parse(localStorage.getItem('historialPokemon')) || [];
@@ -147,6 +173,9 @@
             },
             redirecionarAlHistorico(){
                 window.location.href ='historico.html';
+            },
+            redirecionarAlFavoritos() {
+              window.location.href ='favoritos.html';
             },
             renderizarListaPokemon(listaPokemones){
                 if(listaPokemones.length === 0){
@@ -195,6 +224,9 @@
             },
             alHacerClickBuscar() {
                 utils.redirecionarAlIndex();
+            },
+            alHacerClickFavoritos() {
+                utils.redirecionarAlFavoritos();
             },
             alCargarHistorico(){
                 let listaPokemones = utils.obtenerCachePokemones();
@@ -247,7 +279,6 @@
             init() {
                 if(window.location.pathname.includes('index.html')) {
                     htmlElements.formulario.addEventListener('submit', handlers.alHacerClickBuscarPokemon);
-                    htmlElements.botonHistorico.addEventListener('click', handlers.alHacerClickHistorico);
                     document.addEventListener('DOMContentLoaded', handlers.alCargarContenidoDeDOMIndex);
                 }
                 if(window.location.pathname.includes('historico.html')) {
@@ -255,6 +286,8 @@
                     handlers.alCargarHistorico();
                 }
                 htmlElements.botonBuscar.addEventListener('click', handlers.alHacerClickBuscar);
+                htmlElements.botonHistorico.addEventListener('click', handlers.alHacerClickHistorico);
+                htmlElements.botonFavoritos.addEventListener('click', handlers.alHacerClickFavoritos);
             }
         };
     })();
