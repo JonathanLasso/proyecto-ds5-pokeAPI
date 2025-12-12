@@ -98,35 +98,18 @@ h1 {
     transform: scale(0.85); /* Usamos scale para para agrandar o achicar un elemento visualmente, sin cambiar su tamaño real en el layout. */
 }
 
-.buscar-index {
-    height: 70px;
-    width: 154px;
-    font-size: 19px;
-    font-weight: 900;
-    text-transform: uppercase;
-    color: black;
-    padding: 15px;
-    font-family: 'Courier New', monospace;
-    background-color: var(--secondary-accent);
-    border: var(--border-width) solid var(--border-color);
-    box-shadow: var(--shadow-offset) var(--shadow-offset) 0 var(--shadow-color);
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.1s;
-}
-#buscar:hover {
+.enlace:hover {
     transform: translate(-2px, -2px);
     box-shadow: calc(var(--shadow-offset) + 2px) calc(var(--shadow-offset) + 2px) 0 var(--shadow-color);
 }
-#buscar:Active {
+.enlace:Active {
     transform: translate(var(--shadow-offset), var(--shadow-offset));
     box-shadow: 0 0 0 var(--shadow-color);
 }
 
-.historico-buscar, .favoritos-buscar {
+.enlace {
     font-family: 'Courier New', monospace;
     padding: 15px;
-    width: 179px;
     height: 70px;
     font-size: 19px;
     font-weight: 900;
@@ -140,13 +123,8 @@ h1 {
     transition: all 0.1s;
 }
 
-.historico-buscar:hover {
-    transform: translate(-2px, -2px);
-    box-shadow: calc(var(--shadow-offset) + 2px) calc(var(--shadow-offset) + 2px) 0 var(--shadow-color);
-}
-.historico-buscar:Active {
-    transform: translate(var(--shadow-offset), var(--shadow-offset));
-    box-shadow: 0 0 0 var(--shadow-color);
+.enlace-seleccionado {
+    background-color: var(--secondary-accent);
 }
 
 #vs {
@@ -171,16 +149,6 @@ h1 {
     box-shadow: calc(var(--shadow-offset) + 2px) calc(var(--shadow-offset) + 2px) 0 var(--shadow-color);
 }
 #vs:Active {
-    transform: translate(var(--shadow-offset), var(--shadow-offset));
-    box-shadow: 0 0 0 var(--shadow-color);
-}
-
-#favoritos:hover {
-    transform: translate(-2px, -2px);
-    box-shadow: calc(var(--shadow-offset) + 2px) calc(var(--shadow-offset) + 2px) 0 var(--shadow-color);
-}
-
-#favoritos:Active {
     transform: translate(var(--shadow-offset), var(--shadow-offset));
     box-shadow: 0 0 0 var(--shadow-color);
 }
@@ -321,6 +289,18 @@ h1 {
     top: 0;
     right: 0;
     background: var(--color-api);
+    color: var(--shadow-color);
+    font-size: 12px;
+    padding: 4px 8px;
+    font-weight: bold;
+    font-family: 'Courier New', monospace;
+}
+.tarjeta-pokemon.cache-expirado::after {
+    content: "CACHE EXPIRADO";
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: var(--color-expired);
     color: var(--shadow-color);
     font-size: 12px;
     padding: 4px 8px;
@@ -495,59 +475,6 @@ h1 {
     100% { opacity: 1; }
 }
 
-/*CSS DE LA VISTA DE HISTORICOS*/
-.buscar-historico {
-    height: 70px;
-    width: 154px;
-    font-size: 19px;
-    font-weight: 900;
-    text-transform: uppercase;
-    color: black;
-    padding: 15px;
-    font-family: 'Courier New', monospace;
-    background-color: var(--card-bg);
-    border: var(--border-width) solid var(--border-color);
-    box-shadow: var(--shadow-offset) var(--shadow-offset) 0 var(--shadow-color);
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.1s;
-}
-
-#buscar-historico:hover {
-    transform: translate(-2px, -2px);
-    box-shadow: calc(var(--shadow-offset) + 2px) calc(var(--shadow-offset) + 2px) 0 var(--shadow-color);
-}
-#buscar-historico:Active {
-    transform: translate(var(--shadow-offset), var(--shadow-offset));
-    box-shadow: 0 0 0 var(--shadow-color);
-}
-
-.historico-index {
-    font-family: 'Courier New', monospace;
-    padding: 15px;
-    width: 179px;
-    height: 70px;
-    font-size: 19px;
-    font-weight: 900;
-    text-transform: uppercase;
-    color: black;
-    background-color: var(--secondary-accent);
-    border: var(--border-width) solid var(--border-color);
-    box-shadow: var(--shadow-offset) var(--shadow-offset) 0 var(--shadow-color);
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.1s;
-}
-
-.historico-index:hover {
-    transform: translate(-2px, -2px);
-    box-shadow: calc(var(--shadow-offset) + 2px) calc(var(--shadow-offset) + 2px) 0 var(--shadow-color);
-}
-.historico-index:Active {
-    transform: translate(var(--shadow-offset), var(--shadow-offset));
-    box-shadow: 0 0 0 var(--shadow-color);
-}
-
 #lista-pokemon {
     display: flex;
     flex-direction: column;
@@ -612,7 +539,7 @@ h1 {
     transform: scale(0.8);
 }
 
-#vacio-historico {
+#vacio {
     width: 100%;
     background-color: var(--card-bg);
     border: var(--border-width) solid var(--border-color);
@@ -625,7 +552,7 @@ h1 {
     transform: scale(0.8);
 }
 
-#imagen-historico {
+#imagen {
     transform: scale(3);
 }
 
@@ -635,7 +562,7 @@ h1 {
     margin-bottom: 10px;
 }
 
-#informacion-vacio {
+#informacion {
     font-family: 'Courier New', monospace;
 }
 
@@ -645,19 +572,25 @@ h1 {
     margin-right: 10px;
 }
 
-.boton-favoritos {
+.boton-favorito {
     font-size: 25px;
     margin-bottom: 30px;
     height: 60px;
-    background-color: var(--color-secondary);
+    color: gray;
+    background-color: var(--card-bg);
     border: var(--border-width) solid var(--border-color);
     box-shadow: var(--shadow-offset) var(--shadow-offset) 0 var(--shadow-color);
     cursor: pointer;
 }
 
-.boton-favoritos:hover {
+.boton-favorito:hover {
     transform: translate(-2px, -2px);
     box-shadow: calc(var(--shadow-offset) + 2px) calc(var(--shadow-offset) + 2px) 0 var(--shadow-color);
+}
+
+.boton-favorito-seleccionado {
+    background-color: var(--color-secondary);
+    color: var(--accent-color);
 }
 
 .contenedor-boton-eliminar {
@@ -703,23 +636,4 @@ h1 {
 .boton-limpiar-todo:hover {
     transform: scale(0.8) translate(-2px, -2px);
     box-shadow: calc(var(--shadow-offset) + 2px) calc(var(--shadow-offset) + 2px) 0 var(--shadow-color);
-}
-
-/*CSS DE LA VISTA DE FAVORITOS*/
-
-.favoritos-index {
-    font-family: 'Courier New', monospace;
-    padding: 15px;
-    width: 179px;
-    height: 70px;
-    font-size: 19px;
-    font-weight: 900;
-    text-transform: uppercase;
-    color: black;
-    background-color: var(--secondary-accent);
-    border: var(--border-width) solid var(--border-color);
-    box-shadow: var(--shadow-offset) var(--shadow-offset) 0 var(--shadow-color);
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.1s;
 }
