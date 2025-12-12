@@ -167,7 +167,7 @@
             },
             obtenerPokemonCache(pokemon) {
                 let cachePokemones = JSON.parse(localStorage.getItem('historialPokemon')) || [];
-                const cachePokemonEncontrado = cachePokemones.find(p => p.id == pokemon || p.name === pokemon.toLowerCase());
+                const cachePokemonEncontrado = cachePokemones.find(p => p.id == pokemon || p.name === pokemon);
                 return cachePokemonEncontrado;
             },
 
@@ -320,6 +320,7 @@
             alHacerClickTarjetaPokemonFavorito(e){
                 const botonEliminar = e.target.closest(".boton-eliminar");
                 const botonLimpiarTodo = e.target.closest(".boton-limpiar-todo");
+                const tarjetaPokemonHistorico = e.target.closest(".tarjeta-pokemon-historico");
 
                 if(botonEliminar) {
                     const id = parseInt(botonEliminar.getAttribute("data-id-pokemon"));
@@ -333,6 +334,10 @@
                         utils.guardarPokemonesFavoritos([]);
                         utils.renderizarListaPokemonesFavoritos([]);
                     }
+                }
+                else if(tarjetaPokemonHistorico) {
+                    const nombrePokemon = tarjetaPokemonHistorico.getAttribute("data-nombre-pokemon");
+                    utils.redirecionarAlIndex(nombrePokemon);
                 }
             },
             alHacerClickBotonFavoritos(e) {
