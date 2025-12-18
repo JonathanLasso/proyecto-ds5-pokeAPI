@@ -128,32 +128,6 @@ h1 {
     background-color: var(--secondary-accent);
 }
 
-#vs {
-    width: 100px;
-    height: 70px;
-    padding: 15px;
-    font-size: 19px;
-    font-weight: 900;
-    text-transform: uppercase;
-    color: black;
-    font-family: 'Courier New', monospace;
-    background-color: var(--card-bg);
-    border: var(--border-width) solid var(--border-color);
-    box-shadow: var(--shadow-offset) var(--shadow-offset) 0 var(--shadow-color);
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.1s;
-}
-
-#vs:hover {
-    transform: translate(-2px, -2px);
-    box-shadow: calc(var(--shadow-offset) + 2px) calc(var(--shadow-offset) + 2px) 0 var(--shadow-color);
-}
-#vs:Active {
-    transform: translate(var(--shadow-offset), var(--shadow-offset));
-    box-shadow: 0 0 0 var(--shadow-color);
-}
-
 #fila-input-buscar-tipo-pokemon {
     display: flex;
     width: 540px;
@@ -702,3 +676,126 @@ h1 {
     float: right;
 }
 
+.contenedor-evolucion-pokemon{
+    transform: scale(0.74);
+}
+
+.contenedor-evoluciones.lineal {
+    display: flex;
+    align-items: center;
+}
+
+.evoluciones.lineal {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.evoluciones.condicion {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+.evoluciones.condicion.kleavor,
+.evoluciones.condicion.scyther,
+.evoluciones.condicion.scizor {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 16px;
+}
+.contenedor-evoluciones-base {
+    display: flex;
+    align-items: center;
+}
+
+.contenedor-evoluciones-ramas {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+}
+.contenedor-evoluciones-ramas.kleavor,
+.contenedor-evoluciones-ramas.scyther,
+.contenedor-evoluciones-ramas.scizor {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+}
+
+.evolucion-pokemon {
+    border: var(--border-width) solid var(--border-color);
+    box-shadow: var(--shadow-offset) var(--shadow-offset) 0 var(--shadow-color);
+    background-color: #b3aebd;
+    cursor: pointer;
+}
+.evolucion-pokemon:hover {
+    transform: translate(-2px, -2px);
+    background-color: yellow;
+}
+
+.evolucion-pokemon-seleccionado {
+    background-color: var(--secondary-accent);
+}
+
+.flecha {
+    color: red;
+    font-size: 26px;
+    margin-right: 10px;
+    margin-left: 15px;
+}
+
+.imagen-pokemon-evolucion {
+    width: 100px;
+    object-fit: contain;
+    image-rendering: pixelated;
+}
+
+.nombre-pokemon-evolucion {
+    display: flex;
+    justify-content: center;
+    text-transform: uppercase;
+    font-weight: bold;
+    margin-right: 10px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+
+.linea {
+    border-top: 8px dashed var(--border-color);
+    width: 100%;
+}
+
+.titulo {
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-family: 'Courier New', monospace;
+    margin-top: 10px;
+    margin-bottom: 0;
+}
+
+.contenedor-sugerencias {
+   margin-left: 10px;
+}
+
+#sugerencias {
+    list-style: none;
+    padding: 0;
+    max-height: 150px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: absolute;
+    background: white;
+    border: var(--border-width) solid var(--border-color);
+    box-shadow: var(--shadow-offset) var(--shadow-offset) 0 var(--shadow-color);
+    margin: 0;
+}
+
+#sugerencias li {
+    padding: 8px;
+    cursor: pointer;
+}
+#sugerencias li:hover {
+    background-color: #f0f0f0;
+}
