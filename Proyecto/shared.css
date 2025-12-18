@@ -5,6 +5,7 @@
     --accent-color: #ff3e3e; /* Red */
     --secondary-accent: #4deeea; /* Cyan */
     --shadow-offset: 8px;
+    --shadow-offset-ability: 2px;
 
     /* Colores principales */
     --color-bg: #f5e6d3;           /* Fondo beige */
@@ -160,7 +161,7 @@ h1 {
     transform: scale(0.95);
 }
 
-#buscar-por-pokemon-habilidad {
+#buscar-por {
     width: 30%;
     height: 60px;
     font-family: 'Courier New', monospace;
@@ -174,17 +175,17 @@ h1 {
     transition: all 0.1s;
     text-align: center;
 }
-#buscar-por-pokemon-habilidad:hover {
+#buscar-por:hover {
     transform: translate(-2px, -2px);
     box-shadow: calc(var(--shadow-offset) + 2px) calc(var(--shadow-offset) + 2px) 0 var(--shadow-color);
 }
 
-#buscar-por-pokemon-habilidad:active {
+#buscar-por:active {
     transform: translate(var(--shadow-offset), var(--shadow-offset));
     box-shadow: 0 0 0 var(--shadow-color);
 }
 
-#formulario-buscar-pokemon {
+#formulario-buscar {
     width: 100%;
     max-width: 500px;
     display: flex;
@@ -258,6 +259,18 @@ h1 {
     position: relative;
 }
 
+.tarjeta-habilidad {
+    width: 100%;
+    background-color: var(--card-bg);
+    border: var(--border-width) solid var(--border-color);
+    box-shadow: var(--shadow-offset) var(--shadow-offset) 0 var(--shadow-color);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+}
+
 .tarjeta-pokemon::before {
     content: "POKEMON_DATA";
     position: absolute;
@@ -320,20 +333,7 @@ h1 {
     position: relative;
 }
 
-.contenedor-imagen-pokemon::after {
-    content: "";
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background: repeating-linear-gradient(
-            45deg,
-            transparent,
-            transparent 10px,
-            rgba(0,0,0,0.05) 10px,
-            rgba(0,0,0,0.05) 20px
-    );
-    z-index: 0;
-}
+
 
 .imagen-pokemon {
     width: 100%;
@@ -637,3 +637,68 @@ h1 {
     transform: scale(0.8) translate(-2px, -2px);
     box-shadow: calc(var(--shadow-offset) + 2px) calc(var(--shadow-offset) + 2px) 0 var(--shadow-color);
 }
+
+.efecto {
+    background-color: var(--bg-color);
+    border: var(--border-width) solid var(--border-color);
+    width: 95%;
+    padding: 0 25px;
+}
+
+.contenedor-pokemon-habilidad {
+    display: flex;
+    flex-wrap: wrap;
+    background-color: var(--bg-color);
+    border: var(--border-width) solid var(--border-color);
+    width: 95%;
+    padding: 0;
+    justify-content: flex-start;
+    max-height: 400px; /* Define la altura máxima que quieres que tenga */
+    overflow-y: auto;  /* Habilita el scroll vertical si se pasa de la altura */
+    overflow-x: hidden; /* Evita scroll horizontal accidental */
+}
+
+.tarjeta-habilidad h3 {
+    align-self: flex-start;
+}
+
+.pokemon-habilidad {
+    background-color: var(--card-bg);
+    border: var(--border-width) solid var(--border-color);
+    box-shadow:   var(--shadow-offset-ability)  var(--shadow-offset-ability)  var(--shadow-color);
+    margin: 5px;
+    width: 115px;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.imagen-pokemon-habilidad {
+    width: 45px;
+    height: 45px;
+}
+.nombre-pokemon-habilidad {
+    text-align: center;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 10px;
+}
+.habilidad-pokemon-oculta {
+    color: var(--color-secondary);
+    text-align: center;
+    font-style: italic;
+    font-size: 10px;
+}
+
+.habilidad-id {
+    background-color: var(--color-accent);
+    border: var(--border-width) solid var(--border-color);
+    padding: 0 10px;
+}
+
+.informacion-pokemon h2 span {
+    float: right;
+}
+
