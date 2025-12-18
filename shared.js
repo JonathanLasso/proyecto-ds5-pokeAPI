@@ -256,6 +256,7 @@
                 } catch (error) {
                     throw error;
                 }
+            },
             async fetchCadenaEvolucionPokemon(busqueda) {
               try {
                   const pokemon = await utils.fetchPokemon(busqueda);
