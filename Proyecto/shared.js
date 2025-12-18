@@ -13,6 +13,7 @@
             botonBuscar: document.querySelector('#buscar'),
             botonHistorico: document.querySelector('#historico'),
             botonFavoritos: document.querySelector('#favoritos'),
+            sugerencias: document.querySelector('#sugerencias'),
         };
         //Plantillas HTML (vistas)
         const templates = {
@@ -206,6 +207,11 @@
                   throw error;
               }
             },
+            async fetchPokemones() {
+                const respuesta = await fetch("https://pokeapi.co/api/v2/pokemon?limit=1000");
+                const informacion = await respuesta.json();
+                return informacion.results;
+            },
             render(html) {
                 htmlElements.contenedorPokemon.innerHTML = html;
             },
@@ -347,6 +353,18 @@
                 htmlElements.listaFavoritosPokemons.innerHTML = listaPokemones.map(pokemon => templates.listaFavoritosPokemons(pokemon)).join('') +
                     templates.botonLimpiarTodo();
             },
+            renderizarSugerencias(resultados) {
+                htmlElements.sugerencias.innerHTML = "";
+                resultados.slice(0, 10).forEach(p => {
+                    const lista = document.createElement("li");
+                    lista.textContent = p.name;
+                    lista.addEventListener("click", () => {
+                        htmlElements.inputBuscar.value = p.name;
+                        htmlElements.sugerencias.innerHTML = "";
+                    });
+                    htmlElements.sugerencias.appendChild(lista);
+                });
+            },
             borrarPokemonCache(pokemon_id){
                 let cachePokemones = utils.obtenerCachePokemones();
                 let id = cachePokemones.findIndex(p => p.id === pokemon_id);
@@ -386,6 +404,9 @@
                         audio.play();  // reproducir
                     }
                 }, 200);
+            },
+            filtrarPokemones(pokemones, busqueda) {
+                return pokemones.filter(p => p.name.includes(busqueda.toLowerCase()));
             },
         }
         //Manejadores de Eventos
@@ -536,6 +557,19 @@
                         utils.render(templates.error(error.message));
                     }
                 }
+            },
+            async AlHacerClickBusquedaAutoCompletado() {
+                let pokemones = [];
+                const busqueda = htmlElements.inputBuscar.value.trim();
+                if(busqueda.length < 2){
+                    htmlElements.sugerencias.innerHTML = "";
+                    return
+                }
+                if (pokemones.length === 0) {
+                    pokemones = await utils.fetchPokemones();
+                }
+                const resultados = utils.filtrarPokemones(pokemones, busqueda);
+                utils.renderizarSugerencias(resultados);
             }
         }
         //Inicialización (API Pública)
@@ -548,6 +582,7 @@
                     htmlElements.formulario.addEventListener('submit', handlers.alHacerClickBuscarPokemon);
                     htmlElements.contenedorPokemon.addEventListener('click', handlers.alHacerClickBotonFavoritos);
                     htmlElements.contenedorPokemon.addEventListener('click', handlers.alHacerClickBotonPokemon);
+                    htmlElements.inputBuscar.addEventListener("input", handlers.AlHacerClickBusquedaAutoCompletado)
                     document.addEventListener('DOMContentLoaded', handlers.alCargarContenidoDeDOMIndex);
                 }
 
