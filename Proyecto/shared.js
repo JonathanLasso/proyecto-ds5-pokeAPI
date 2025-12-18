@@ -3,6 +3,8 @@
         const constantes = {
             tiempoExpiracion: 15 * 1000,
         }
+        let nombresPokemones = [];
+        let nombresPokemonesTimeStamp;
         //Referencias al DOM
         const htmlElements = {
             formulario: document.querySelector('#formulario-buscar'),
@@ -24,10 +26,9 @@
                 // Habilidades
                 const habilidadesHtml = pokemon.abilities.map(habilidad => {
                     const claseHabilidad = habilidad.is_hidden ? 'habilidad-oculta' : 'habilidad-normal';
-                    if(claseHabilidad === "habilidad-oculta") {
+                    if (claseHabilidad === "habilidad-oculta") {
                         return `<span class="${claseHabilidad}">${habilidad.ability.name} (Oculta)</span>`;
-                    }
-                    else{
+                    } else {
                         return `<span class="${claseHabilidad}">${habilidad.ability.name}</span>`;
                     }
                 }).join('');
@@ -46,8 +47,8 @@
                     evolucionesPokemon = `
                         <div class="evoluciones ${tipoEvolucion}">
                             ${pokemonEvoluciones.map((evolucion, index) => {
-                                const estadoSeleccionado = utils.verificarPokemonSeleccionado(evolucion.name) ? 'evolucion-pokemon-seleccionado' : '';
-                                    return `
+                        const estadoSeleccionado = utils.verificarPokemonSeleccionado(evolucion.name) ? 'evolucion-pokemon-seleccionado' : '';
+                        return `
                                     <div class="contenedor-evoluciones ${tipoEvolucion}">
                                         <div class="evolucion-pokemon ${estadoSeleccionado}"data-nombre-pokemon="${evolucion.name}">
                                             <img class="imagen-pokemon-evolucion" src="${evolucion.sprite}" alt="${evolucion.name}">
@@ -56,7 +57,8 @@
                                         </div>
                                         ${index < pokemonEvoluciones.length - 1 ? `<span class="flecha">→</span>` : ''}
                                     </div>
-                            `;}).join('')}
+                            `;
+                    }).join('')}
                         </div>
                     `;
                 }
@@ -81,15 +83,15 @@
                             </div>
                             <div class="contenedor-evoluciones-ramas ${pokemon.scyther.name || pokemon.scizor.name || pokemon.kleavor.name}">
                                 ${ramas.map(evolucion => {
-                                    const estadoSeleccionado = utils.verificarPokemonSeleccionado(evolucion.name) ? 'evolucion-pokemon-seleccionado' : '';
-                                    return `
+                        const estadoSeleccionado = utils.verificarPokemonSeleccionado(evolucion.name) ? 'evolucion-pokemon-seleccionado' : '';
+                        return `
                                         <div class="evolucion-pokemon ${estadoSeleccionado}"data-nombre-pokemon="${evolucion.name}">
                                             <img class="imagen-pokemon-evolucion" src="${evolucion.sprite}" alt="${evolucion.name}">
                                             <span class="nombre-pokemon-evolucion"> ${evolucion.name} </span>
                                             <span class="nombre-pokemon-evolucion"> ${evolucion.level || evolucion.condition} </span>
                                         </div>
                                     `;
-                                }).join('')}
+                    }).join('')}
                             </div>
                         </div>
                     `;
@@ -129,7 +131,7 @@
                         console.error(error);
                         return '';
                     }
-                    indiceHabilidad =pokemon.abilities.findIndex(pa => pa.ability.name === habilidad.name)
+                    indiceHabilidad = pokemon.abilities.findIndex(pa => pa.ability.name === habilidad.name)
                     const habilidadOculta = pokemon.abilities[indiceHabilidad].is_hidden ? "(oculta)" : ""
                     return `
                     <div class="pokemon-habilidad">
@@ -256,25 +258,33 @@
                 } catch (error) {
                     throw error;
                 }
+            },
             async fetchCadenaEvolucionPokemon(busqueda) {
-              try {
-                  const pokemon = await utils.fetchPokemon(busqueda);
-                  const respuestaEspeciePokemon = await fetch(pokemon.species.url);
-                  const especiePokemon = await respuestaEspeciePokemon.json();
-                  const respuestaCadenaEvolucionPokemon = await fetch(especiePokemon.evolution_chain.url);
-                  const cadenaEvolucion = await respuestaCadenaEvolucionPokemon.json();
-                  return cadenaEvolucion;
-              }   catch (error) {
-                  throw error;
-              }
+                try {
+                    const pokemon = await utils.fetchPokemon(busqueda);
+                    const respuestaEspeciePokemon = await fetch(pokemon.species.url);
+                    const especiePokemon = await respuestaEspeciePokemon.json();
+                    const respuestaCadenaEvolucionPokemon = await fetch(especiePokemon.evolution_chain.url);
+                    const cadenaEvolucion = await respuestaCadenaEvolucionPokemon.json();
+                    return cadenaEvolucion;
+                } catch (error) {
+                    throw error;
+                }
             },
             async fetchPokemones() {
                 const respuesta = await fetch("https://pokeapi.co/api/v2/pokemon?limit=1000");
                 const informacion = await respuesta.json();
-                return informacion.results;
+                return informacion.results.map(p => p.name);
             },
             render(html) {
                 htmlElements.contenedorPokemon.innerHTML = html;
+            },
+            guardarNombresPokemones(pokemones) {
+                localStorage.setItem("nombresPokemones", JSON.stringify(pokemones));
+
+            },
+            guardarNombresPodemonesTimeStamp(pokemonesTimeStamp) {
+                localStorage.setItem("nombresPokemonesTimeStamp", JSON.stringify(pokemonesTimeStamp));
             },
             guardarBusqueda(pokemon) {
                 const key = "historialPokemon";
@@ -316,6 +326,12 @@
                 let cachePokemones = JSON.parse(localStorage.getItem('historialPokemon')) || [];
                 return cachePokemones
             },
+            obtenerNombresPokemones() {
+                return JSON.parse(localStorage.getItem('nombresPokemones'));
+            },
+            obtenerNombresPokemonesTimeStamp() {
+                return JSON.parse(localStorage.getItem('nombresPokemonesTimeStamp'));
+            },
             obtenerPokemonCache(pokemon) {
                 let cachePokemones = JSON.parse(localStorage.getItem('historialPokemon')) || [];
                 const cachePokemonEncontrado = cachePokemones.find(p => p.id == pokemon || p.name === pokemon);
@@ -326,8 +342,8 @@
                 return pokemonesFavoritos
             },
             obtenerPokemonSeleccionado() {
-              pokemonSeleccionado = localStorage.getItem('pokemonSeleccionado');
-              return pokemonSeleccionado;
+                pokemonSeleccionado = localStorage.getItem('pokemonSeleccionado');
+                return pokemonSeleccionado;
             },
             async obtenerEvolucionesPokemon(cadenaEvolucionPokemon) {
                 const listaEvoluciones = [];
@@ -347,7 +363,7 @@
                     };
                     await recorrerCadenaEvolucion(cadenaEvolucionPokemon.chain);
                     return listaEvoluciones;
-                }catch (error){
+                } catch (error) {
                     throw error;
                 }
             },
@@ -380,12 +396,11 @@
                 }
                 return tipoEvolucion;
             },
-            redirecionarAlIndex(nombrePokemon = null){
-                if(nombrePokemon === null) {
-                    window.location.href ='index.html';
-                }
-                else{
-                    window.location.href =`index.html?busqueda=${nombrePokemon}`;
+            redirecionarAlIndex(nombrePokemon = null) {
+                if (nombrePokemon === null) {
+                    window.location.href = 'index.html';
+                } else {
+                    window.location.href = `index.html?busqueda=${nombrePokemon}`;
                 }
             },
             redirecionarAlHistorico() {
@@ -412,7 +427,7 @@
                 htmlElements.listaFavoritosPokemons.innerHTML = listaPokemones.map(pokemon => templates.listaFavoritosPokemons(pokemon)).join('') +
                     templates.botonLimpiarTodo();
             },
-            borrarPokemonCache(pokemon_id){
+            borrarPokemonCache(pokemon_id) {
                 let cachePokemones = utils.obtenerCachePokemones();
                 let id = cachePokemones.findIndex(p => p.id === pokemon_id);
                 if (id !== -1) {
@@ -420,13 +435,13 @@
                     utils.guardarCachePokemones(cachePokemones);
                 }
             },
-             renderizarSugerencias(resultados) {
+            renderizarSugerencias(resultados) {
                 htmlElements.sugerencias.innerHTML = "";
                 resultados.slice(0, 10).forEach(p => {
                     const lista = document.createElement("li");
-                    lista.textContent = p.name;
+                    lista.textContent = p;
                     lista.addEventListener("click", () => {
-                        htmlElements.inputBuscar.value = p.name;
+                        htmlElements.inputBuscar.value = p;
                         htmlElements.sugerencias.innerHTML = "";
                     });
                     htmlElements.sugerencias.appendChild(lista);
@@ -455,7 +470,7 @@
                     utils.redirecionarAlIndex(nombre);
                 }
             },
-            sonidoPokemon(){
+            sonidoPokemon() {
                 setTimeout(() => {
                     const audio = document.getElementById('audioPokemon');
                     if (audio) {
@@ -465,7 +480,7 @@
                 }, 200);
             },
             filtrarPokemones(pokemones, busqueda) {
-                return pokemones.filter(p => p.name.includes(busqueda.toLowerCase()));
+                return pokemones.filter(p => p.includes(busqueda.toLowerCase()));
             },
         }
         //Manejadores de Eventos
@@ -485,28 +500,27 @@
                     case "pokémon":
                         try {
                             const estadoCache = utils.verificarPokemonApiCache(busqueda);
-                            if(estadoCache === "api" || estadoCache === "cache-expirado") {
-                              const pokemon = await utils.fetchPokemon(busqueda);
-                              const cadenaEvolutivaPokemon = await utils.fetchCadenaEvolucionPokemon(busqueda);
-                              const pokemonEvoluciones = await  utils.obtenerEvolucionesPokemon(cadenaEvolutivaPokemon)
-                              const tipoEvolucionPokemon = utils.verificarTipoEvolucion(cadenaEvolutivaPokemon);
-                              utils.seleccionarPokemon(pokemon.name, null, false);
-                              utils.render(templates.tarjetaPokemon(pokemon, estadoCache, pokemonEvoluciones, tipoEvolucionPokemon));
-                              utils.sonidoPokemon();
-                              utils.guardarBusqueda(pokemon);
-                            }
-                            else if(estadoCache === "cache") {
-                              const pokemon = utils.obtenerPokemonCache(busqueda);
-                              const cadenaEvolutivaPokemon = await utils.fetchCadenaEvolucionPokemon(pokemon.name);
-                              const pokemonEvoluciones = await  utils.obtenerEvolucionesPokemon(cadenaEvolutivaPokemon)
-                              const tipoEvolucionPokemon = utils.verificarTipoEvolucion(cadenaEvolutivaPokemon);
-                              utils.seleccionarPokemon(pokemon.name, null, false);
-                              utils.render(templates.tarjetaPokemon(pokemon, estadoCache, pokemonEvoluciones, tipoEvolucionPokemon));
-                              utils.sonidoPokemon();
+                            if (estadoCache === "api" || estadoCache === "cache-expirado") {
+                                const pokemon = await utils.fetchPokemon(busqueda);
+                                const cadenaEvolutivaPokemon = await utils.fetchCadenaEvolucionPokemon(busqueda);
+                                const pokemonEvoluciones = await utils.obtenerEvolucionesPokemon(cadenaEvolutivaPokemon)
+                                const tipoEvolucionPokemon = utils.verificarTipoEvolucion(cadenaEvolutivaPokemon);
+                                utils.seleccionarPokemon(pokemon.name, null, false);
+                                utils.render(templates.tarjetaPokemon(pokemon, estadoCache, pokemonEvoluciones, tipoEvolucionPokemon));
+                                utils.sonidoPokemon();
+                                utils.guardarBusqueda(pokemon);
+                            } else if (estadoCache === "cache") {
+                                const pokemon = utils.obtenerPokemonCache(busqueda);
+                                const cadenaEvolutivaPokemon = await utils.fetchCadenaEvolucionPokemon(pokemon.name);
+                                const pokemonEvoluciones = await utils.obtenerEvolucionesPokemon(cadenaEvolutivaPokemon)
+                                const tipoEvolucionPokemon = utils.verificarTipoEvolucion(cadenaEvolutivaPokemon);
+                                utils.seleccionarPokemon(pokemon.name, null, false);
+                                utils.render(templates.tarjetaPokemon(pokemon, estadoCache, pokemonEvoluciones, tipoEvolucionPokemon));
+                                utils.sonidoPokemon();
                             }
                         } catch (error) {
-                              utils.render(templates.error(error.message));
-                            }
+                            utils.render(templates.error(error.message));
+                        }
                         break;
                     case "habilidad":
                         try {
@@ -593,8 +607,8 @@
                     utils.guardarPokemonFavorito(utils.obtenerPokemonCache(id));
                 }
             },
-            alHacerClickBotonPokemon(e){
-              const pokemon = e.target.closest(".evolucion-pokemon");
+            alHacerClickBotonPokemon(e) {
+                const pokemon = e.target.closest(".evolucion-pokemon");
                 if (!pokemon) return;
                 const nombre = pokemon.dataset.nombrePokemon;
                 utils.seleccionarPokemon(nombre, pokemon)
@@ -611,7 +625,7 @@
                         if (estadoCache === "api" || estadoCache === "cache-expirado") {
                             const pokemon = await utils.fetchPokemon(busqueda);
                             const cadenaEvolutivaPokemon = await utils.fetchCadenaEvolucionPokemon(busqueda);
-                            const pokemonEvoluciones = await  utils.obtenerEvolucionesPokemon(cadenaEvolutivaPokemon)
+                            const pokemonEvoluciones = await utils.obtenerEvolucionesPokemon(cadenaEvolutivaPokemon)
                             const tipoEvolucionPokemon = utils.verificarTipoEvolucion(cadenaEvolutivaPokemon);
                             utils.render(templates.tarjetaPokemon(pokemon, estadoCache, pokemonEvoluciones, tipoEvolucionPokemon));
                             utils.sonidoPokemon();
@@ -619,7 +633,7 @@
                         } else if (estadoCache === "cache") {
                             const pokemon = utils.obtenerPokemonCache(busqueda);
                             const cadenaEvolutivaPokemon = await utils.fetchCadenaEvolucionPokemon(pokemon.name);
-                            const pokemonEvoluciones = await  utils.obtenerEvolucionesPokemon(cadenaEvolutivaPokemon)
+                            const pokemonEvoluciones = await utils.obtenerEvolucionesPokemon(cadenaEvolutivaPokemon)
                             const tipoEvolucionPokemon = utils.verificarTipoEvolucion(cadenaEvolutivaPokemon);
                             utils.render(templates.tarjetaPokemon(pokemon, estadoCache, pokemonEvoluciones, tipoEvolucionPokemon));
                             utils.sonidoPokemon();
@@ -630,16 +644,22 @@
                 }
             },
             async AlHacerClickBusquedaAutoCompletado() {
-                let pokemones = [];
                 const busqueda = htmlElements.inputBuscar.value.trim();
-                if(busqueda.length < 2){
+                if (busqueda.length < 2) {
                     htmlElements.sugerencias.innerHTML = "";
                     return
                 }
-                if (pokemones.length === 0) {
-                    pokemones = await utils.fetchPokemones();
+                if (nombresPokemones.length === 0)  {
+                    nombresPokemones = utils.obtenerNombresPokemones() || [];
+                    nombresPokemonesTimeStamp = utils.obtenerNombresPokemonesTimeStamp() || 0;
+                    if (nombresPokemones.length === 0 || (nombresPokemonesTimeStamp - Date.now()) > 24 *60 * 60 * 1000 ) {
+                        nombresPokemones = await utils.fetchPokemones();
+                        nombresPokemonesTimeStamp = Date.now();
+                        utils.guardarNombresPokemones(nombresPokemones);
+                        utils.guardarNombresPodemonesTimeStamp(nombresPokemonesTimeStamp)
+                    }
                 }
-                const resultados = utils.filtrarPokemones(pokemones, busqueda);
+                const resultados = utils.filtrarPokemones(nombresPokemones, busqueda);
                 utils.renderizarSugerencias(resultados);
             }
         }
