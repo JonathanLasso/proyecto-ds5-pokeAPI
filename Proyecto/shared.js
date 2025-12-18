@@ -383,7 +383,7 @@
                     const audio = document.getElementById('audioPokemon');
                     if (audio) {
                         audio.muted = false;     // quitar mute
-                        audio.play().catch(() => {});  // reproducir
+                        audio.play();  // reproducir
                     }
                 }, 200);
             },
