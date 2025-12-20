@@ -1,9 +1,11 @@
-# Nombres de los integrantes
+# Proyecto Semestral: PokéFinder - Aplicación Web con Consumo de API
+
+## Nombres de los integrantes
 
 - Jonathan Lasso
 -  Ricardo De Freitas
 
-# Intrucciones de uso
+## Intrucciones de uso
 Al iniciar la página puedes buscar por habilidad o por pokémon.
 ![](/imagenes/imagen-inicial.png)
 
@@ -25,7 +27,16 @@ Estando en la vista de histórico puedes agregar tus pokemones o pokémon en el 
 ![](/imagenes/imagen-pokemon-favorito.png)
 ![](/imagenes/imagen-favoritos.png)
 
-# Link de GitHub Pages
+Puedes eliminar el historico y los pokémones favoritos que tienes
+
+![](/imagenes/imagen-historico-vacio.png)
+![](/imagenes/imagen-pokemon-favorito-vacio.png)
+
+Incluso puedes ver las evoluciones del pokemon que busca
+
+![](/imagenes/imagen-evoluciones-pokemones.png)
+
+## Link de GitHub Pages
 https://jonathanlasso.github.io/proyecto-ds5-pokeAPI/index.html
 
 
