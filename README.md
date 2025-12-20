@@ -27,12 +27,12 @@ Estando en la vista de histórico puedes agregar tus pokemones o pokémon en el 
 ![](/imagenes/imagen-pokemon-favorito.png)
 ![](/imagenes/imagen-favoritos.png)
 
-Puedes eliminar el historico y los pokémones favoritos que tienes
+Puedes eliminar el histórico y los pokémones favoritos que tienes
 
 ![](/imagenes/imagen-historico-vacio.png)
 ![](/imagenes/imagen-pokemon-favorito-vacio.png)
 
-Incluso puedes ver las evoluciones del pokemon que busca
+Incluso puedes ver las evoluciones del pokémon que busca
 
 ![](/imagenes/imagen-evoluciones-pokemones.png)
 
